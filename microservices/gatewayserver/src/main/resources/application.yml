@@ -1,0 +1,22 @@
+server:  port: 8080
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: buku-service
+        uri: http://localhost:9004
+        predicates:        - Path=/buku/**
+      - id: trans-service
+        uri:          http://localhost:9003
+        predicates:        - Path=/trans/**
+      - id: dompet-service
+        uri:          lb:http//MICRODOMPET
+        predicates:        - Path=/dompet/**
+      - id: user-service
+        uri:           lb:http//MICROUSER
+        predicates:        - Path=/user/**      httpclient:        pool:          max-idle-time: 1000          max-life-time: 1000        
+  application:    name: gateway-server
+    
+eureka:  client:    fetch-registry: true
+    register-with-eureka: true
+    service-url:      defaultZone: http://localhost:8081/eureka/
