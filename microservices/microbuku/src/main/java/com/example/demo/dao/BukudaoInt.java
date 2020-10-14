@@ -12,7 +12,6 @@ import com.example.demo.model.Buku;
 
 public interface BukudaoInt {
 public int tambahbuku(String transid,Buku buku,MultipartFile file) throws IOException;
-public int hapusBuku(String bukuid);
 public int updatebuku(Buku buku);
 public boolean bukuexist(String bukuid);
 public ResponseEntity<Resource> bacabuku(String id) throws IOException;

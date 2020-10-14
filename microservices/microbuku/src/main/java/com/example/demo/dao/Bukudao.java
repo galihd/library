@@ -104,14 +104,6 @@ public class Bukudao implements BukudaoInt{
 			return 400;
 		}
 	}
-
-	@Override
-	public int hapusBuku(String bukuid) {
-		// TODO Auto-generated method stub
-		return 0;
-		
-	}
-
 	@Override
 	public int updatebuku(Buku buku) {
 		return 0;
@@ -126,13 +118,9 @@ public class Bukudao implements BukudaoInt{
 	@Override
 	public ResponseEntity<List<String>> Searchbuku(String query) {
 		List<String> result = new ArrayList<>();
-		if(Suggest(query).getBody().size() < 1) {
-			result = jdbctemplateobj.queryForList("select judul from buku where judul like %"+"?"+"%",
-					new Object[] {query},String.class);
-			return new ResponseEntity<List<String>>(result,HttpStatus.OK);
-		}else {
-			return Suggest(query);
-		}
+		result = jdbctemplateobj.queryForList("select judul from buku where judul like ?",
+				new Object[] {"%" + query + "%"},String.class);
+		return new ResponseEntity<List<String>>(result,HttpStatus.OK);
 		
 	}
 
@@ -140,7 +128,11 @@ public class Bukudao implements BukudaoInt{
 	public ResponseEntity<List<String>> Suggest(String query) {
 		List<String> result = jdbctemplateobj.queryForList("select judul from buku where judul like ?",
 				new Object[] {query +"%"},String.class);
-		return new ResponseEntity<List<String>>(result,HttpStatus.OK);
+		if(result.size() > 0) {
+			return new ResponseEntity<List<String>>(result,HttpStatus.OK);
+		}else {
+			return Searchbuku(query);
+		}
 	}
 	
 
