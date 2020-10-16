@@ -1,39 +1,38 @@
 package com.example.demo.api;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Cuser;
-import com.example.demo.service.CuserService;
+import com.example.demo.service.CuserServiceInt;
 
 
 @RestController
 public class Cusercontroller {
 
 	@Autowired
-	private final CuserService cuserservice;
+	private final CuserServiceInt cuserservice;
 	
 	
-	public Cusercontroller(CuserService cuserservice) {
+	public Cusercontroller(CuserServiceInt cuserservice) {
 		this.cuserservice = cuserservice;
 	}
 	
 	@PostMapping
-	public void registerUser(@RequestBody Cuser user,HttpServletResponse res) {
-		res.setStatus(cuserservice.registeruser(user));
+	public ResponseEntity<Object> registerUser(@RequestBody Cuser user) {
+		return (cuserservice.registerUser(user));
 	}
 	@PutMapping
-	public void Changepassword(@RequestBody Cuser user,HttpServletResponse res) {
-		res.setStatus(cuserservice.changepassword(user));
+	public ResponseEntity<Object> Changepassword(@RequestBody Cuser user) {
+		return cuserservice.changePassword(user);
 	}
 	@PostMapping(path = "/login")
-	public void authenticateUser(@RequestBody Cuser user, HttpServletResponse res ) {
-		res.setStatus(cuserservice.authenticateUser(user));
+	public ResponseEntity<Object> authenticateUser(@RequestBody Cuser user) {
+		return cuserservice.authenticateUser(user);
 	}
 	
 

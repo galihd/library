@@ -1,12 +1,10 @@
 package com.example.demo.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import com.example.demo.model.Cuser;
 
-public interface CuserdaoInt {
-	int registerUser(Cuser user);
-	int Changepassword(Cuser user);
-	boolean userexist(String username);
-	Cuser finduserbyname(String username);
-	int authenticateUser(Cuser user);
-	int deleteUser(Cuser user);
+@Repository
+public interface CuserdaoInt extends JpaRepository<Cuser, String>{
 }

@@ -142,7 +142,7 @@ public class Transdao implements TransdaoInt{
 			mainheaders.setContentType(MediaType.MULTIPART_FORM_DATA);
 			HttpEntity<MultiValueMap<String, Object>> requestentity = new HttpEntity<>(mainrequestentity,mainheaders);
 			
-			ResponseEntity<Object> response = rt.postForEntity("http://microbuku/"+transid
+			ResponseEntity<Object> response = rt.postForEntity("http://microbuku/"
 					,requestentity, Object.class);
 
 			if (response.getStatusCodeValue() != 200) {

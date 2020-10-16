@@ -1,26 +1,58 @@
 package com.example.demo.model;
 
 
-import java.sql.Date;
+
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-public class Buku {
-	String bukuid;
+@Entity
+@Table(name = "buku")
+@EntityListeners(AuditingEntityListener.class)
+public class Buku implements BukuInfo{
+	@Id
+	@Column(name = "judul")
 	String judul;
+	
+	@Column(name = "penulis")
 	String penulis;
+	
+	@Column(name = "tahunterbit")
 	String tahun;
+	
+	@Column(name = "genre")
 	String genre;
+	
+	@Lob
+	@Column(name = "filebuku")
+	@JsonIgnore
 	byte[] file;
+	
+	@Column(name = "harga")
 	int harga;
+	
+	@Column(name = "transid")
 	String transid;
+	
+	@LastModifiedDate
+	@Column(name = "tanggalupdate")
 	Date tanggalupdate;
 	
 	@JsonCreator
 	public Buku(
-			String bukuid,
 			@JsonProperty("judul") String judul,
 			@JsonProperty("penulis")String penulis,
 			@JsonProperty("tahun") String tahun,
@@ -31,7 +63,6 @@ public class Buku {
 			String transid, 
 			Date tanggalupdate) {
 		super();
-		this.bukuid = bukuid;
 		this.judul = judul;
 		this.penulis = penulis;
 		this.tahun = tahun;
@@ -40,14 +71,6 @@ public class Buku {
 		this.harga = harga;
 		this.transid = transid;
 		this.tanggalupdate = tanggalupdate;
-	}
-
-	public String getBukuid() {
-		return bukuid;
-	}
-
-	public void setBukuid(String bukuid) {
-		this.bukuid = bukuid;
 	}
 
 	public String getJudul() {
@@ -117,7 +140,7 @@ public class Buku {
 	
 	@Override
 	public String toString() {
-		return "Buku [bukuid=" + bukuid + ", judul=" + judul + ", penulis=" + penulis + ", tahun=" + tahun + ", genre="
+		return "Buku [judul=" + judul + ", penulis=" + penulis + ", tahun=" + tahun + ", genre="
 				+ genre + ", file=" + file + ", harga=" + harga + ", penambahanid=" + transid + ", tanggalupdate="
 				+ tanggalupdate + "]";
 	}

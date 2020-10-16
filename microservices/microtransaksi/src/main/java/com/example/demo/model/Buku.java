@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Buku {
-	String bukuid;
 	String judul;
 	String penulis;
 	String tahun;
@@ -18,7 +17,6 @@ public class Buku {
 	
 	@JsonCreator
 	public Buku(
-			String bukuid,
 			@JsonProperty("judul") String judul,
 			@JsonProperty("penulis")String penulis,
 			@JsonProperty("tahun") String tahun,
@@ -29,7 +27,6 @@ public class Buku {
 			String transid, 
 			Date tanggalupdate) {
 		super();
-		this.bukuid = bukuid;
 		this.judul = judul;
 		this.penulis = penulis;
 		this.tahun = tahun;
@@ -38,14 +35,6 @@ public class Buku {
 		this.harga = harga;
 		this.transid = transid;
 		this.tanggalupdate = tanggalupdate;
-	}
-
-	public String getBukuid() {
-		return bukuid;
-	}
-
-	public void setBukuid(String bukuid) {
-		this.bukuid = bukuid;
 	}
 
 	public String getJudul() {
@@ -115,7 +104,7 @@ public class Buku {
 	
 	@Override
 	public String toString() {
-		return "Buku [bukuid=" + bukuid + ", judul=" + judul + ", penulis=" + penulis + ", tahun=" + tahun + ", genre="
+		return "Buku [judul=" + judul + ", penulis=" + penulis + ", tahun=" + tahun + ", genre="
 				+ genre + ", file=" + file + ", harga=" + harga + ", penambahanid=" + transid + ", tanggalupdate="
 				+ tanggalupdate + "]";
 	}

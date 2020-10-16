@@ -1,21 +1,28 @@
 package com.example.demo.dao;
 
-import java.io.IOException;
 import java.util.List;
 
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Buku;
+import com.example.demo.model.BukuInfo;
 
-
-public interface BukudaoInt {
-public int tambahbuku(String transid,Buku buku,MultipartFile file) throws IOException;
-public int updatebuku(Buku buku);
-public boolean bukuexist(String bukuid);
-public ResponseEntity<Resource> bacabuku(String id) throws IOException;
-public ResponseEntity<Buku> getBuku(String judul);
-public ResponseEntity<List<String>> Searchbuku(String query);
-public ResponseEntity<List<String>> Suggest(String query);
+@Repository
+public interface BukudaoInt extends JpaRepository<Buku, String>{
+	
+	@Query(value = "select judul from buku where judul like :searchquery",nativeQuery = true)
+	List<String> searchBuku(@Param("searchquery") String searchquery);
+	
+	@Modifying
+	@Query(value = "update buku set harga = :harga where judul = :judul",nativeQuery = true)
+	void updateHarga(@Param("judul") String judul ,@Param("harga") int harga);
+	
+	BukuInfo getOneByJudul(String judul);
+	List<BukuInfo> findByJudul(String judul);
+	List<BukuInfo> findByTahun(String tahun);
+	List<BukuInfo> findByGenre(String genre);
 }

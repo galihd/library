@@ -14,5 +14,5 @@ spring:
         predicates:        - Path=/dompet/**
       - id: user-service
         uri:           lb:http://MICROUSER
-        predicates:        - Path=/user/**      default-filters:      - StripPrefix= 1      httpclient:        pool:          max-idle-time: 1000          max-life-time: 1000        
+        predicates:        - Path=/user/**      default-filters:      - StripPrefix= 1      httpclient:        pool:          max-idle-time: 10000          max-life-time: 10000        
   application:    name: gateway-server

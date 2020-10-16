@@ -1,11 +1,21 @@
 package com.example.demo.model;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@Entity
+@Table(name = "CUSER")
 public class Cuser {
+	@Id
+	@Column(name = "username")
     String username;
+	@Column(name ="pswd")
     String pswd;
+	@Column(name = "email")
     String email;
-
 	
     public Cuser(@JsonProperty("name")String username,
                  @JsonProperty("pwd")String pswd,
