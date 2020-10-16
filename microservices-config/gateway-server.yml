@@ -4,15 +4,36 @@ spring:
     gateway:
       routes:
       - id: buku-service
-        uri:           lb:http://MICROBUKU
-        predicates:        - Path=/buku/**
+        uri: 
+          lb:http://MICROBUKU
+        predicates:
+        - Path=/buku/**
       - id: trans-service
-        uri:          lb:http://MICROTRANS
-        predicates:        - Path=/trans/**
+        uri:
+          lb:http://MICROTRANS
+        predicates:
+        - Path=/trans/**
       - id: dompet-service
-        uri:          lb:http://MICRODOMPET
-        predicates:        - Path=/dompet/**
+        uri:
+          lb:http://MICRODOMPET
+        predicates:
+        - Path=/dompet/**
       - id: user-service
+<<<<<<< HEAD
         uri:           lb:http://MICROUSER
         predicates:        - Path=/user/**      default-filters:      - StripPrefix= 1      httpclient:        pool:          max-idle-time: 10000          max-life-time: 10000        
   application:    name: gateway-server
+=======
+        uri: 
+          lb:http://MICROUSER
+        predicates:
+        - Path=/user/**
+      default-filters:
+      - StripPrefix= 1
+      httpclient:
+        pool:
+          max-idle-time: 10000
+          max-life-time: 10000        
+  application:
+    name: gateway-server
+>>>>>>> 2a43efc3bf15ceccb913660d45e43d2c71e2d8f4
