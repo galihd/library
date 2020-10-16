@@ -16,7 +16,7 @@ public interface BukuserviceInt {
 	ResponseEntity<Object> tambahBuku(Buku buku,MultipartFile file) throws IOException;
 	ResponseEntity<Object> updateHarga(Buku buku);
 	ResponseEntity<Object> updateBuku(Buku buku);
-	ResponseEntity<List<String>> searchBuku(String judul,String fixed);
+	ResponseEntity<List<BukuInfo>> searchBuku(String judul,String fixed);
 	ResponseEntity<List<BukuInfo>> findByTahun(String tahun);
 	ResponseEntity<List<BukuInfo>> findByGenre(String genre);
 }

@@ -72,7 +72,7 @@ public class bukucontroller {
 	}
 	
 	@GetMapping(path= "/searchbuku")
-	public ResponseEntity<List<String>> searchbuku(@RequestParam(value = "query") String searchquery,
+	public ResponseEntity<List<BukuInfo>> searchbuku(@RequestParam(value = "query") String searchquery,
 												   @RequestParam(value = "final") String fixed){
 		return bukuservice.searchBuku(searchquery,fixed);
 	}

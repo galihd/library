@@ -19,21 +19,13 @@ spring:
         predicates:
         - Path=/dompet/**
       - id: user-service
-<<<<<<< HEAD
         uri:           lb:http://MICROUSER
-        predicates:        - Path=/user/**      default-filters:      - StripPrefix= 1      httpclient:        pool:          max-idle-time: 10000          max-life-time: 10000        
-  application:    name: gateway-server
-=======
+        predicates:        - Path=/user/**
         uri: 
           lb:http://MICROUSER
         predicates:
         - Path=/user/**
       default-filters:
-      - StripPrefix= 1
-      httpclient:
-        pool:
-          max-idle-time: 10000
-          max-life-time: 10000        
-  application:
-    name: gateway-server
->>>>>>> 2a43efc3bf15ceccb913660d45e43d2c71e2d8f4
+      - StripPrefix= 1      httpclient:        pool:          max-idle-time: 10000          max-life-time: 10000        
+  application:    name: gateway-server
+        

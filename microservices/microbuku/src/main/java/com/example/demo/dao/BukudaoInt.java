@@ -14,8 +14,8 @@ import com.example.demo.model.BukuInfo;
 @Repository
 public interface BukudaoInt extends JpaRepository<Buku, String>{
 	
-	@Query(value = "select judul from buku where judul like :searchquery",nativeQuery = true)
-	List<String> searchBuku(@Param("searchquery") String searchquery);
+	@Query(value = "select * from buku where judul like :searchquery",nativeQuery = true)
+	List<BukuInfo> searchBuku(@Param("searchquery") String searchquery);
 	
 	@Modifying
 	@Query(value = "update buku set harga = :harga where judul = :judul",nativeQuery = true)

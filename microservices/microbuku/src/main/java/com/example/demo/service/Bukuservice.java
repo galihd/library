@@ -88,11 +88,11 @@ public class Bukuservice implements BukuserviceInt{
 	}
 
 	@Override
-	public ResponseEntity<List<String>> searchBuku(String judul,String fixed) {
+	public ResponseEntity<List<BukuInfo>> searchBuku(String judul,String fixed) {
 		if(fixed.equalsIgnoreCase("false")) {
-			return new ResponseEntity<List<String>>(bukudao.searchBuku(judul+"%"),HttpStatus.OK);
+			return new ResponseEntity<List<BukuInfo>>(bukudao.searchBuku(judul+"%"),HttpStatus.OK);
 		}else {
-			return new ResponseEntity<List<String>>(bukudao.searchBuku("%"+judul+"%"),HttpStatus.OK);
+			return new ResponseEntity<List<BukuInfo>>(bukudao.searchBuku("%"+judul+"%"),HttpStatus.OK);
 		}
 	}
 
