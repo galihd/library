@@ -19,8 +19,6 @@ spring:
         predicates:
         - Path=/dompet/**
       - id: user-service
-        uri:           lb:http://MICROUSER
-        predicates:        - Path=/user/**
         uri: 
           lb:http://MICROUSER
         predicates:
