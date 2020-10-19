@@ -7,15 +7,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.Buku;
 import com.example.demo.model.BukuInfo;
 
 @Repository
+@Transactional(readOnly = true)
 public interface BukudaoInt extends JpaRepository<Buku, String>{
-	
-	@Query(value = "select * from buku where judul like :searchquery",nativeQuery = true)
-	List<BukuInfo> searchBuku(@Param("searchquery") String searchquery);
 	
 	@Modifying
 	@Query(value = "update buku set harga = :harga where judul = :judul",nativeQuery = true)
@@ -23,6 +22,8 @@ public interface BukudaoInt extends JpaRepository<Buku, String>{
 	
 	BukuInfo getOneByJudul(String judul);
 	List<BukuInfo> findByJudul(String judul);
+	List<BukuInfo> findByJudulContainingIgnoreCase(String judul);
+	List<BukuInfo> findByJudulIgnoreCaseStartingWith(String judul);
 	List<BukuInfo> findByTahun(String tahun);
 	List<BukuInfo> findByGenre(String genre);
 }

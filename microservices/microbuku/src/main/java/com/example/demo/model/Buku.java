@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "buku")
 @EntityListeners(AuditingEntityListener.class)
-public class Buku implements BukuInfo{
+public class Buku{
 	@Id
 	@Column(name = "judul")
 	String judul;

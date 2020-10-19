@@ -39,7 +39,7 @@ public class bukucontroller {
 	}
 	
 	@GetMapping
-	public ResponseEntity<Buku> getbuku(@RequestParam(value = "judul") String judul) {
+	public ResponseEntity<BukuInfo> getbuku(@RequestParam(value = "judul") String judul) {
 		return bukuservice.getBookInfo(judul);
 	}
 	

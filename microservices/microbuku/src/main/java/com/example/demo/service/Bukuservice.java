@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.sql.DataSource;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -26,7 +25,6 @@ import com.example.demo.model.Buku;
 import com.example.demo.model.BukuInfo;
 
 @Service
-@Transactional
 public class Bukuservice implements BukuserviceInt{
 	@Bean
 	static DataSource getDataSource() {
@@ -45,8 +43,8 @@ public class Bukuservice implements BukuserviceInt{
 	}
 
 	@Override
-	public ResponseEntity<Buku> getBookInfo(String judul) {
-		return new ResponseEntity<Buku>((Buku)bukudao.getOneByJudul(judul),HttpStatus.OK);
+	public ResponseEntity<BukuInfo> getBookInfo(String judul) {
+		return new ResponseEntity<>(bukudao.getOneByJudul(judul),HttpStatus.OK);
 	}
 
 	@Override
@@ -90,9 +88,10 @@ public class Bukuservice implements BukuserviceInt{
 	@Override
 	public ResponseEntity<List<BukuInfo>> searchBuku(String judul,String fixed) {
 		if(fixed.equalsIgnoreCase("false")) {
-			return new ResponseEntity<List<BukuInfo>>(bukudao.searchBuku(judul+"%"),HttpStatus.OK);
+			return new ResponseEntity<List<BukuInfo>>(
+					bukudao.findByJudulIgnoreCaseStartingWith(judul),HttpStatus.OK);
 		}else {
-			return new ResponseEntity<List<BukuInfo>>(bukudao.searchBuku("%"+judul+"%"),HttpStatus.OK);
+			return new ResponseEntity<List<BukuInfo>>(bukudao.findByJudulContainingIgnoreCase(judul),HttpStatus.OK);
 		}
 	}
 
@@ -116,6 +115,7 @@ public class Bukuservice implements BukuserviceInt{
 	public ResponseEntity<List<BukuInfo>> findByGenre(String genre) {
 		return new ResponseEntity<List<BukuInfo>>(bukudao.findByGenre(genre),HttpStatus.OK);
 	}
+
 	
 	
 

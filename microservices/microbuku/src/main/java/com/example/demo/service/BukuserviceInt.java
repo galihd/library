@@ -11,7 +11,7 @@ import com.example.demo.model.Buku;
 import com.example.demo.model.BukuInfo;
 
 public interface BukuserviceInt {
-	ResponseEntity<Buku> getBookInfo(String bukuid);
+	ResponseEntity<BukuInfo> getBookInfo(String bukuid);
 	ResponseEntity<Resource> bacaBuku(String bukuid) throws IOException;
 	ResponseEntity<Object> tambahBuku(Buku buku,MultipartFile file) throws IOException;
 	ResponseEntity<Object> updateHarga(Buku buku);

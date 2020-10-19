@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,13 @@ public class CuserService implements CuserServiceInt{
 	@Override
 	public ResponseEntity<Object> registerUser(Cuser user) {
 		if(!cuserdao.findById(user.getUsername()).isPresent()) {
-			cuserdao.save(user);
-			return rt.postForEntity("http://microdompet?username="+user.getUsername(), null, Object.class);
+			ResponseEntity<Object> response = rt.postForEntity("http://microdompet?username="+user.getUsername(), null, Object.class);
+			if(response.getStatusCode().equals(HttpStatus.OK)) {
+				cuserdao.save(user);
+				return response;
+			}else {
+				return response;
+			}
 		}else {
 			return new ResponseEntity<Object>(null,HttpStatus.BAD_REQUEST);
 		}
@@ -47,28 +53,26 @@ public class CuserService implements CuserServiceInt{
 	@Override
 	public ResponseEntity<Object> authenticateUser(Cuser user) {
 		if(cuserdao.getOne(user.getUsername()).getPswd().equals(user.getPswd()))
-			return new ResponseEntity<Object>(null, HttpStatus.OK);
+			return new ResponseEntity<Object>(HttpStatus.OK);
 		
-		return new ResponseEntity<Object>(null,HttpStatus.CONFLICT);
+		return new ResponseEntity<Object>(HttpStatus.CONFLICT);
 	}
 
 	@Override
 	public ResponseEntity<Object> deleteUser(Cuser user) {
 		cuserdao.delete(user);
-		return new ResponseEntity<Object>(null,HttpStatus.OK);
+		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<Object> changePassword(Cuser user) {
-		if(cuserdao.findById(user.getUsername()).isPresent()) {
-			cuserdao.save(user);
-			return new ResponseEntity<Object>(null,HttpStatus.OK);
+		Optional<Cuser> updateuser;
+		if((updateuser = cuserdao.findById(user.getUsername())).isPresent()) {
+			updateuser.get().setPswd(user.getPswd());;
+			cuserdao.save(updateuser.get());
+			return new ResponseEntity<Object>(HttpStatus.OK);
 		}else {
-			return new ResponseEntity<Object>(null,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
 	}
-
-
-	
-	
 }
