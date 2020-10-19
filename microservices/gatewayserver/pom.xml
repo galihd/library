@@ -63,6 +63,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>gatewayserver-docker</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
