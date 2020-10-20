@@ -10,7 +10,6 @@ public class Dompetmapper implements RowMapper<Dompet>{
 
 	@Override
 	public Dompet mapRow(ResultSet rs, int rowNum) throws SQLException {
-		// TODO Auto-generated method stub
 		Dompet dompet = new Dompet();
 		dompet.setUsername(rs.getString("username"));
 		dompet.setSaldo(rs.getInt("saldo"));

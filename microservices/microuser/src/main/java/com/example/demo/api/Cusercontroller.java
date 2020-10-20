@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ public class Cusercontroller {
 	}
 	
 	@PostMapping
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<Object> registerUser(@RequestBody Cuser user) {
 		return (cuserservice.registerUser(user));
 	}
@@ -31,6 +33,7 @@ public class Cusercontroller {
 		return cuserservice.changePassword(user);
 	}
 	@PostMapping(path = "/login")
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<Object> authenticateUser(@RequestBody Cuser user) {
 		return cuserservice.authenticateUser(user);
 	}
