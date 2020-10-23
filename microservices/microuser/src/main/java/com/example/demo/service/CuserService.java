@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,6 @@ public class CuserService implements CuserServiceInt{
 	public ResponseEntity<Object> authenticateUser(Cuser user) {
 		if(cuserdao.getOne(user.getUsername()).getPswd().equals(user.getPswd()))
 			return new ResponseEntity<Object>(HttpStatus.OK);
-		
 		return new ResponseEntity<Object>(HttpStatus.CONFLICT);
 	}
 

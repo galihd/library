@@ -1,15 +1,14 @@
 package com.example.demo.api;
 
+import com.example.demo.model.Cuser;
+import com.example.demo.service.CuserServiceInt;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.demo.model.Cuser;
-import com.example.demo.service.CuserServiceInt;
 
 
 @RestController
@@ -24,7 +23,6 @@ public class Cusercontroller {
 	}
 	
 	@PostMapping
-	@CrossOrigin(origins = "*")
 	public ResponseEntity<Object> registerUser(@RequestBody Cuser user) {
 		return (cuserservice.registerUser(user));
 	}
@@ -33,7 +31,6 @@ public class Cusercontroller {
 		return cuserservice.changePassword(user);
 	}
 	@PostMapping(path = "/login")
-	@CrossOrigin(origins = "*")
 	public ResponseEntity<Object> authenticateUser(@RequestBody Cuser user) {
 		return cuserservice.authenticateUser(user);
 	}

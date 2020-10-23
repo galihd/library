@@ -4,15 +4,14 @@ spring:
   application:
     name: gateway-server
   cloud:
-    gateway:
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods:
-              - POST
-              - GET
-              - DELETE
+    # gateway:
+    #   globalcors:
+    #     corsConfigurations:
+    #       '[/**]':
+    #         allowedOrigins: "http://localhost"
+    #         allowedMethods:
+    #         - POST
+
     config:
       uri:
       - http://localhost:8888
