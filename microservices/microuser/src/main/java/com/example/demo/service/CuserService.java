@@ -3,15 +3,14 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.dao.CuserdaoInt;
+import com.example.demo.model.Cuser;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import com.example.demo.dao.CuserdaoInt;
-import com.example.demo.model.Cuser;
 
 @Service
 public class CuserService implements CuserServiceInt{

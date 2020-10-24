@@ -14,14 +14,27 @@ public class Corsconfig {
     @Bean
     CorsWebFilter corsWebFilter(){
         final CorsConfiguration corsConfiguration = new CorsConfiguration();
-
         corsConfiguration.setAllowedOrigins(Collections.singletonList("*"));
-        corsConfiguration.setMaxAge(3600L);
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+        corsConfiguration.setMaxAge(5000L);
+        corsConfiguration.setAllowedMethods(Arrays.asList("POST","PUT","DELETE"));
         corsConfiguration.addAllowedHeader("*");
 
+        final CorsConfiguration bukuConfiguration = new CorsConfiguration();
+        bukuConfiguration.setAllowedOrigins(Collections.singletonList("*"));
+        bukuConfiguration.setMaxAge(10000L);
+        bukuConfiguration.setAllowedMethods(Arrays.asList("PUT,POST,GET"));
+        bukuConfiguration.addAllowedHeader("*");
+
+        final CorsConfiguration transConfiguration = new CorsConfiguration();
+        transConfiguration.setAllowedOrigins(Collections.singletonList("*"));
+        transConfiguration.setMaxAge(5000L);
+        transConfiguration.setAllowedMethods(Arrays.asList("POST,GET"));
+        transConfiguration.addAllowedHeader("*");
+
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/user/**", corsConfiguration);
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/buku/**", bukuConfiguration);
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/trans/**", transConfiguration);
         return new CorsWebFilter(urlBasedCorsConfigurationSource);
         }
     
