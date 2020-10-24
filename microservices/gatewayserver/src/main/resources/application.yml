@@ -11,7 +11,6 @@ spring:
     #         allowedOrigins: "http://localhost"
     #         allowedMethods:
     #         - POST
-
     config:
       uri:
       - http://localhost:8888
