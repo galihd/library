@@ -8,9 +8,12 @@ spring:
     #   globalcors:
     #     corsConfigurations:
     #       '[/**]':
-    #         allowedOrigins: "http://localhost"
+    #         allowedOrigins: "*"
     #         allowedMethods:
     #         - POST
+    #         - GET
+    #         - PUT
+    #         - DELETE
     config:
       uri:
       - http://localhost:8888
