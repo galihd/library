@@ -41,11 +41,13 @@ public class DompetController {
 	
 	@GetMapping(path = "/{username}")
 	public ResponseEntity<Dompet> getdompet(@PathVariable("username") String username){
+		System.out.println("called by : " + username );
 		return dompetservice.getdompet(username);
 	}
 	
 	@GetMapping(path = "/daftarpinjaman")
 	public ResponseEntity<Daftarpinjamanuser> getdaftarpinjaman(@RequestParam(value = "username") String username){
+		System.out.println("called list by : " + username );
 		return dompetservice.getdaftarpinjaman(username);
 	}
 	

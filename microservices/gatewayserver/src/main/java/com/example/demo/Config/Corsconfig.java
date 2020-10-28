@@ -31,10 +31,17 @@ public class Corsconfig {
         transConfiguration.setAllowedMethods(Arrays.asList("POST,GET"));
         transConfiguration.addAllowedHeader("*");
 
+        final CorsConfiguration dompetConfiguration = new CorsConfiguration();
+        dompetConfiguration.setAllowedOrigins(Collections.singletonList("*"));
+        dompetConfiguration.setAllowedMethods(Arrays.asList("GET","UPDATE"));
+        dompetConfiguration.setMaxAge(5000L);
+        dompetConfiguration.addAllowedHeader(CorsConfiguration.ALL);
+
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/user/**", corsConfiguration);
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/buku/**", bukuConfiguration);
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/trans/**", transConfiguration);
+        // urlBasedCorsConfigurationSource.registerCorsConfiguration("/dompet/**", dompetConfiguration);
         return new CorsWebFilter(urlBasedCorsConfigurationSource);
         }
     

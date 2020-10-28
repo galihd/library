@@ -71,18 +71,16 @@ public class Transdao implements TransdaoInt{
 			return response;			
 		}
 		if(String.valueOf(args[0]).equalsIgnoreCase("pinjam") && args.length == 3) {
-			System.out.println("pinjam ===");
 			//---------------getbuku
 			
 			String json = rt.getForObject("http://microbuku?judul="+String.valueOf(args[1]), String.class);
-			
+			System.out.println("jsonbuku rt = " + json);
 			ObjectMapper mapper = new ObjectMapper().enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 			
 			mapper.registerModule(new ParameterNamesModule(Mode.PROPERTIES));
 			
 			Buku book = mapper.readValue(json, Buku.class);
 			
-
 			int lamapinjam = Integer.parseInt(String.valueOf(args[2]));
 			//---------------kurangsaldo
 			updatesaldo(dompetid, "kurangsaldo", book.getHarga()*lamapinjam);

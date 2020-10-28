@@ -23,8 +23,7 @@ public class Buku {
 			@JsonProperty("genre") String genre,
 			byte[] file,
 			@JsonProperty("harga") int harga,
-			@JsonProperty("transid")
-			String transid, 
+			@JsonProperty("transid") String transid, 
 			Date tanggalupdate) {
 		super();
 		this.judul = judul;
