@@ -8,7 +8,6 @@ int lamapinjam;
 String transid;
 public Daftarpinjaman() {}
 public Daftarpinjaman(String judulbuku, Date tanggalpinjam, int lamapinjam,String transid) {
-	super();
 	this.judulbuku = judulbuku;
 	this.tanggalpinjam = tanggalpinjam;
 	this.lamapinjam = lamapinjam;

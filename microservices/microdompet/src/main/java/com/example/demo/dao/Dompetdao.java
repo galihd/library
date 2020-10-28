@@ -73,10 +73,13 @@ public class Dompetdao implements DompetdaoInt{
 	@Override
 	public ResponseEntity<Daftarpinjamanuser> getdaftarpinjaman(String username) {
 		List<Daftarpinjaman> daftarpinjaman = jdbctemplateobj.query("select * from daftarpeminjaman where \"username\" = ?",
-				new Object[] {username}, new Daftarpinjamanmapper());
+		new Object[] {username}, new Daftarpinjamanmapper());
 		Daftarpinjamanuser daftaruser = new Daftarpinjamanuser();
 		daftaruser.setUsername(username);
 		daftaruser.setDaftarpinjaman((ArrayList<Daftarpinjaman>) daftarpinjaman);
+
+		System.out.println("called list by : " + username );
+		System.out.println("list json : " + daftaruser.toString());
 		return new ResponseEntity<>(daftaruser,HttpStatus.OK);
 	}
 

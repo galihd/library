@@ -47,7 +47,7 @@ public class DompetController {
 	
 	@GetMapping(path = "/daftarpinjaman")
 	public ResponseEntity<Daftarpinjamanuser> getdaftarpinjaman(@RequestParam(value = "username") String username){
-		System.out.println("called list by : " + username );
+		
 		return dompetservice.getdaftarpinjaman(username);
 	}
 	

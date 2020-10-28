@@ -44,6 +44,8 @@ public class Bukuservice implements BukuserviceInt{
 
 	@Override
 	public ResponseEntity<BukuInfo> getBookInfo(String judul) {
+		System.out.println("judul : " + judul);
+		System.out.println("json buku : "+ bukudao.getOneByJudul(judul).toString());
 		return new ResponseEntity<>(bukudao.getOneByJudul(judul),HttpStatus.OK);
 	}
 
