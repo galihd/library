@@ -78,7 +78,7 @@ public class Dompetdao implements DompetdaoInt{
 		daftaruser.setUsername(username);
 		daftaruser.setDaftarpinjaman((ArrayList<Daftarpinjaman>) daftarpinjaman);
 
-		System.out.println("called list by : " + username );
+		System.out.println("called list by : " + username);
 		System.out.println("list json : " + daftaruser.toString());
 		return new ResponseEntity<>(daftaruser,HttpStatus.OK);
 	}
