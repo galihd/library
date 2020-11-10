@@ -1,54 +1,26 @@
 package com.example.demo.Config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-    
-    private final PasswordEncoder passwordEncoder;
+@EnableWebFluxSecurity
+public class SecurityConfig {
 
-    @Autowired
-    public SecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.
-            authorizeRequests()
-            .anyRequest()
-            .authenticated()
-            .and()
-            .httpBasic();
-    }
-
-    @Override
     @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails userdetails = User.builder()
-                            .username("testuser")
-                            .password(passwordEncoder.encode("testuser"))
-                            .roles("member")
-                            .build();
-
-        
-        return new InMemoryUserDetailsManager(
-            userdetails
+    public SecurityWebFilterChain webFilterChain (ServerHttpSecurity http){
+        http.authorizeExchange(ex ->
+        ex.pathMatchers(HttpMethod.POST,"/user/**").permitAll()
+        .pathMatchers("/").permitAll()
+        .anyExchange().authenticated()
+        .and().httpBasic()
         );
+        return http.build();
     }
-
-
 }
 
    

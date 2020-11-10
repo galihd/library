@@ -24,6 +24,11 @@ spring:
         predicates:
         - Path=/user/**
       default-filters:
-      - StripPrefix= 1      httpclient:        pool:          max-idle-time: 10000          max-life-time: 10000        
-  application:    name: gateway-server
+      - StripPrefix= 1
+      httpclient:
+        pool:
+          max-idle-time: 10000
+          max-life-time: 10000        
+  application:
+    name: gateway-server
         
