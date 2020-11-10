@@ -36,10 +36,6 @@ public class Cusercontroller {
 	public ResponseEntity<Object> Changepassword(@RequestBody Cuser user) {
 		return cuserservice.changePassword(user);
 	}
-	@PostMapping(path = "/login")
-	public ResponseEntity<String> authenticateUser(@RequestBody Cuser user) {
-		return cuserservice.authenticateUser(user);
-	}
 	@GetMapping(path = "/{username}")
 	public ResponseEntity<Cuser> getUserInfo(@PathVariable("username") String username) {
 		return cuserservice.getUserInfo(username);

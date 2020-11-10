@@ -11,7 +11,6 @@ public interface CuserServiceInt {
 	ResponseEntity<Object> registerUser(Cuser user);
 	ResponseEntity<Cuser> getUserInfo(String username);
 	ResponseEntity<List<Cuser>> getAllUser();
-	ResponseEntity<String> authenticateUser(Cuser user);
 	ResponseEntity<Object> deleteUser(Cuser user);
 	ResponseEntity<Object> changePassword(Cuser user);
 	ResponseEntity<Object> registerAdmin(Cuser user);

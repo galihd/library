@@ -32,10 +32,10 @@ public class GatewayserverApplication {
 		return builder.routes().build();
 	}
 
-	@Bean
-	GlobalFilter customfilter(){
-		return new CustomGlobalFilter();
-	}
+	// @Bean
+	// GlobalFilter customfilter(){
+	// 	return new CustomGlobalFilter();
+	// }
 
     // @Bean
     // PasswordEncoder passwordEncoder(){

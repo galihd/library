@@ -5,15 +5,19 @@ import java.util.Optional;
 
 import com.example.demo.dao.CuserdaoInt;
 import com.example.demo.model.Cuser;
+import com.example.demo.model.CuserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class CuserService implements CuserServiceInt {
+public class CuserService implements CuserServiceInt,UserDetailsService {
 	@Autowired
 	private final CuserdaoInt cuserdao;
 
@@ -53,13 +57,10 @@ public class CuserService implements CuserServiceInt {
 	}
 
 	@Override
-	public ResponseEntity<String> authenticateUser(Cuser user) {
-		if (cuserdao.getOne(user.getUsername()).getPswd().equals(user.getPswd())){
-			return new ResponseEntity<String>(HttpStatus.OK);
-		}else{
-			return new ResponseEntity<String>(HttpStatus.CONFLICT);
-		}
-
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println("username = " + username);
+		System.out.println("cuserdao = " + cuserdao.getOne(username).getUsername());
+		return new CuserDetails(cuserdao.getOne(username));
 	}
 
 	@Override
