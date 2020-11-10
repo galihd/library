@@ -19,7 +19,8 @@ public class SecurityConfig {
         .authorizeExchange(ex ->
         ex.pathMatchers(HttpMethod.POST,"/user/login","/user/","/user/admin").permitAll()
         .pathMatchers("/").permitAll()
-        .anyExchange().authenticated());
+        .anyExchange().authenticated())
+        .oauth2ResourceServer().jwt();
         return http.build();
     }
 }
