@@ -18,7 +18,8 @@ public class SecurityConfig {
         .pathMatchers("/").permitAll()
         .anyExchange().authenticated()
         .and().httpBasic()
-        );
+        )
+        .csrf().disable();
         return http.build();
     }
 }

@@ -13,7 +13,7 @@ public class Cuser {
 	@Column(name = "username")
     String username;
 	@Column(name ="pswd")
-    String pswd;
+	String pswd;
 	@Column(name = "email")
     String email;
 	@Column(name = "roles")

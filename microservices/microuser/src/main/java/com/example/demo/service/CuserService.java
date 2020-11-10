@@ -81,6 +81,7 @@ public class CuserService implements CuserServiceInt {
 	@Override
 	public ResponseEntity<Object> registerAdmin(Cuser user) {
 		if (!cuserdao.findById(user.getUsername()).isPresent()) {
+			System.out.println("execute registeradmin");
 			ResponseEntity<Object> response = rt.postForEntity("http://microdompet?username=" + user.getUsername(),
 					null, Object.class);
 			if (response.getStatusCode().equals(HttpStatus.OK)) {
