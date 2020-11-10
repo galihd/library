@@ -16,19 +16,31 @@ public class Cuser {
     String pswd;
 	@Column(name = "email")
     String email;
-	
+	@Column(name = "roles")
+	String roles;
+
     public Cuser(@JsonProperty("name")String username,
                  @JsonProperty("pwd")String pswd,
-                 @JsonProperty("email")String email) {
+				 @JsonProperty("email")String email) {
         this.username = username;
         this.pswd = pswd;
-        this.email = email;
+		this.email = email;
     }
 
 	@Override
 	public String toString() {
 		return "Cuser [username=" + username + ", pswd=" + pswd + ", email=" + email + "]";
 	}
+
+
+	public String getRoles() {
+		return this.roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
+
 
 	public String getUsername() {
 		return username;
@@ -55,6 +67,5 @@ public class Cuser {
 	}
 
 	public Cuser() {}
-	
     
 }

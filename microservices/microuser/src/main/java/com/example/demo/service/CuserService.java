@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class CuserService implements CuserServiceInt{
+public class CuserService implements CuserServiceInt {
 	@Autowired
 	private final CuserdaoInt cuserdao;
-	
+
 	@Autowired
 	RestTemplate rt = new RestTemplate();
-	
+
 	public CuserService(CuserdaoInt cuserdao) {
 		super();
 		this.cuserdao = cuserdao;
@@ -27,22 +27,24 @@ public class CuserService implements CuserServiceInt{
 
 	@Override
 	public ResponseEntity<Object> registerUser(Cuser user) {
-		if(!cuserdao.findById(user.getUsername()).isPresent()) {
-			ResponseEntity<Object> response = rt.postForEntity("http://microdompet?username="+user.getUsername(), null, Object.class);
-			if(response.getStatusCode().equals(HttpStatus.OK)) {
+		if (!cuserdao.findById(user.getUsername()).isPresent()) {
+			ResponseEntity<Object> response = rt.postForEntity("http://microdompet?username=" + user.getUsername(),
+					null, Object.class);
+			if (response.getStatusCode().equals(HttpStatus.OK)) {
+				user.setRoles("member");
 				cuserdao.save(user);
 				return response;
-			}else {
+			} else {
 				return response;
 			}
-		}else {
-			return new ResponseEntity<Object>(null,HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<Object>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@Override
 	public ResponseEntity<Cuser> getUserInfo(String username) {
-		return new ResponseEntity<Cuser>(cuserdao.getOne(username),HttpStatus.OK);
+		return new ResponseEntity<Cuser>(cuserdao.getOne(username), HttpStatus.OK);
 	}
 
 	@Override
@@ -51,10 +53,10 @@ public class CuserService implements CuserServiceInt{
 	}
 
 	@Override
-	public ResponseEntity<Object> authenticateUser(Cuser user) {
-		if(cuserdao.getOne(user.getUsername()).getPswd().equals(user.getPswd()))
-			return new ResponseEntity<Object>(HttpStatus.OK);
-		return new ResponseEntity<Object>(HttpStatus.CONFLICT);
+	public ResponseEntity<String> authenticateUser(Cuser user) {
+		if (cuserdao.getOne(user.getUsername()).getPswd().equals(user.getPswd()))
+			return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<String>(HttpStatus.CONFLICT);
 	}
 
 	@Override
@@ -66,12 +68,30 @@ public class CuserService implements CuserServiceInt{
 	@Override
 	public ResponseEntity<Object> changePassword(Cuser user) {
 		Optional<Cuser> updateuser;
-		if((updateuser = cuserdao.findById(user.getUsername())).isPresent()) {
-			updateuser.get().setPswd(user.getPswd());;
+		if ((updateuser = cuserdao.findById(user.getUsername())).isPresent()) {
+			updateuser.get().setPswd(user.getPswd());
+			;
 			cuserdao.save(updateuser.get());
 			return new ResponseEntity<Object>(HttpStatus.OK);
-		}else {
+		} else {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@Override
+	public ResponseEntity<Object> registerAdmin(Cuser user) {
+		if (!cuserdao.findById(user.getUsername()).isPresent()) {
+			ResponseEntity<Object> response = rt.postForEntity("http://microdompet?username=" + user.getUsername(),
+					null, Object.class);
+			if (response.getStatusCode().equals(HttpStatus.OK)) {
+				user.setRoles("admin");
+				cuserdao.save(user);
+				return response;
+			} else {
+				return response;
+			}
+		} else {
+			return new ResponseEntity<Object>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 }

@@ -23,7 +23,7 @@ public class DompetController {
 		this.dompetservice = dompetservice;
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping(path = "/{id}")
 	public ResponseEntity<Object> updatesaldo(
 			@PathVariable("id") String dompetid,
 			@RequestParam("jenis") String jenis,

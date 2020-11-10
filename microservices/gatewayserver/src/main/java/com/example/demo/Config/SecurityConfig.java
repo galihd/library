@@ -14,7 +14,7 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain webFilterChain (ServerHttpSecurity http){
         http.authorizeExchange(ex ->
-        ex.pathMatchers(HttpMethod.POST,"/user/**").permitAll()
+        ex.pathMatchers(HttpMethod.POST,"/user/login","/user/","/user/admin").permitAll()
         .pathMatchers("/").permitAll()
         .anyExchange().authenticated()
         .and().httpBasic()
