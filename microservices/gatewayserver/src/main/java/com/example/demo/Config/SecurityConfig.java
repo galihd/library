@@ -13,13 +13,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain webFilterChain (ServerHttpSecurity http){
-        http.authorizeExchange(ex ->
+        http
+        .httpBasic().disable()
+        .csrf().disable()
+        .authorizeExchange(ex ->
         ex.pathMatchers(HttpMethod.POST,"/user/login","/user/","/user/admin").permitAll()
         .pathMatchers("/").permitAll()
-        .anyExchange().authenticated()
-        .and().httpBasic()
-        )
-        .csrf().disable();
+        .anyExchange().authenticated());
         return http.build();
     }
 }

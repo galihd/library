@@ -18,7 +18,6 @@ public class Cuser {
     String email;
 	@Column(name = "roles")
 	String roles;
-
     public Cuser(@JsonProperty("name")String username,
                  @JsonProperty("pwd")String pswd,
 				 @JsonProperty("email")String email) {

@@ -41,7 +41,7 @@ public class Corsconfig {
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/user/**", corsConfiguration);
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/buku/**", bukuConfiguration);
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/trans/**", transConfiguration);
-        // urlBasedCorsConfigurationSource.registerCorsConfiguration("/dompet/**", dompetConfiguration);
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/dompet/**", dompetConfiguration);
         return new CorsWebFilter(urlBasedCorsConfigurationSource);
         }
     

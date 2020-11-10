@@ -54,9 +54,12 @@ public class CuserService implements CuserServiceInt {
 
 	@Override
 	public ResponseEntity<String> authenticateUser(Cuser user) {
-		if (cuserdao.getOne(user.getUsername()).getPswd().equals(user.getPswd()))
+		if (cuserdao.getOne(user.getUsername()).getPswd().equals(user.getPswd())){
 			return new ResponseEntity<String>(HttpStatus.OK);
-		return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}else{
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}
+
 	}
 
 	@Override
