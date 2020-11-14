@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +21,9 @@ import org.springframework.web.client.RestTemplate;
 public class CuserService implements CuserServiceInt,UserDetailsService {
 	@Autowired
 	private final CuserdaoInt cuserdao;
+
+	@Autowired
+	private PasswordEncoder bcrypt;
 
 	@Autowired
 	RestTemplate rt = new RestTemplate();
@@ -36,6 +40,7 @@ public class CuserService implements CuserServiceInt,UserDetailsService {
 					null, Object.class);
 			if (response.getStatusCode().equals(HttpStatus.OK)) {
 				user.setRoles("member");
+				user.setPswd(bcrypt.encode(user.getPswd()));
 				cuserdao.save(user);
 				return response;
 			} else {
@@ -59,8 +64,9 @@ public class CuserService implements CuserServiceInt,UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println("username = " + username);
-		System.out.println("cuserdao = " + cuserdao.getOne(username).getUsername());
-		return new CuserDetails(cuserdao.getOne(username));
+		Cuser userinfo = cuserdao.findById(username).get();
+		System.out.println("password = " + userinfo.getPswd());
+		return new CuserDetails(userinfo);
 	}
 
 	@Override
@@ -74,7 +80,6 @@ public class CuserService implements CuserServiceInt,UserDetailsService {
 		Optional<Cuser> updateuser;
 		if ((updateuser = cuserdao.findById(user.getUsername())).isPresent()) {
 			updateuser.get().setPswd(user.getPswd());
-			;
 			cuserdao.save(updateuser.get());
 			return new ResponseEntity<Object>(HttpStatus.OK);
 		} else {
@@ -90,6 +95,7 @@ public class CuserService implements CuserServiceInt,UserDetailsService {
 					null, Object.class);
 			if (response.getStatusCode().equals(HttpStatus.OK)) {
 				user.setRoles("admin");
+				user.setPswd(bcrypt.encode(user.getPswd()));
 				cuserdao.save(user);
 				return response;
 			} else {

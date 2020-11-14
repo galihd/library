@@ -37,8 +37,5 @@ public class GatewayserverApplication {
 	// 	return new CustomGlobalFilter();
 	// }
 
-    // @Bean
-    // PasswordEncoder passwordEncoder(){
-    //     return new BCryptPasswordEncoder(10);
-    // }
+
 }
