@@ -11,7 +11,7 @@ public class Authfilter extends AbstractGatewayFilterFactory<Authfilter.Config> 
 
     @Override
     public GatewayFilter apply(Config config) {
-        // TODO Auto-generated method stub
+        
         return null;
     }
 }

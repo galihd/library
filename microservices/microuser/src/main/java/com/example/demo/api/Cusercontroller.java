@@ -1,5 +1,7 @@
 package com.example.demo.api;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.example.demo.model.Cuser;
 import com.example.demo.service.CuserServiceInt;
 
@@ -20,11 +22,10 @@ public class Cusercontroller {
 	@Autowired
 	private final CuserServiceInt cuserservice;
 	
-	
 	public Cusercontroller(CuserServiceInt cuserservice) {
 		this.cuserservice = cuserservice;
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Object> registerUser(@RequestBody Cuser user,@RequestParam(name = "admin",required = false) Boolean admin) {
 		if(!admin)
@@ -36,6 +37,12 @@ public class Cusercontroller {
 	public ResponseEntity<Object> Changepassword(@RequestBody Cuser user) {
 		return cuserservice.changePassword(user);
 	}
+
+	@GetMapping(path = "/login")
+	public void login(){
+		System.out.println("loginned ? xD");
+	}
+
 	@GetMapping(path = "/{username}")
 	public ResponseEntity<Cuser> getUserInfo(@PathVariable("username") String username) {
 		return cuserservice.getUserInfo(username);

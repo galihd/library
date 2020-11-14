@@ -1,17 +1,26 @@
 package com.example.demo.config;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.example.demo.service.CuserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -26,23 +35,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(cuserservice);
+        auth.userDetailsService(cuserservice).passwordEncoder(bcryptpasswordEncoder());
+        
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
         .authorizeRequests()
-        .antMatchers(HttpMethod.POST,"/","/login").permitAll()
+        .antMatchers(HttpMethod.POST).permitAll()
         .anyRequest()
         .authenticated()
         .and()
-        .httpBasic().and()
+        .httpBasic()
+        .and()
+        .formLogin()
+            .successHandler(new AuthenticationSuccessHandler(){
+                @Override
+                public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                        Authentication authentication) throws IOException, ServletException {
+                    response.setStatus(HttpStatus.CONTINUE.value());
+                    System.out.println("status = " + response.getStatus());
+                    response.setHeader("someheader", "somevalue");
+                    
+                }
+            })
+        .and()
         .csrf().disable();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder bcryptpasswordEncoder(){
         return new BCryptPasswordEncoder(10);
     }
 }

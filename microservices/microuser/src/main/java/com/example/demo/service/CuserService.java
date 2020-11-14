@@ -53,19 +53,17 @@ public class CuserService implements CuserServiceInt,UserDetailsService {
 
 	@Override
 	public ResponseEntity<Cuser> getUserInfo(String username) {
-		return new ResponseEntity<Cuser>(cuserdao.getOne(username), HttpStatus.OK);
+		return new ResponseEntity<Cuser>(cuserdao.findById(username).get(), HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<List<Cuser>> getAllUser() {
 		return new ResponseEntity<List<Cuser>>(cuserdao.findAll(), HttpStatus.OK);
 	}
-
+	//Spring Security Authentication//
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("username = " + username);
 		Cuser userinfo = cuserdao.findById(username).get();
-		System.out.println("password = " + userinfo.getPswd());
 		return new CuserDetails(userinfo);
 	}
 
@@ -94,7 +92,7 @@ public class CuserService implements CuserServiceInt,UserDetailsService {
 			ResponseEntity<Object> response = rt.postForEntity("http://microdompet?username=" + user.getUsername(),
 					null, Object.class);
 			if (response.getStatusCode().equals(HttpStatus.OK)) {
-				user.setRoles("admin");
+				user.setRoles("user,admin");
 				user.setPswd(bcrypt.encode(user.getPswd()));
 				cuserdao.save(user);
 				return response;
