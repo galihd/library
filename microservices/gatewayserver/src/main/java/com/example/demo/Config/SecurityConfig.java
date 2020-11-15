@@ -13,6 +13,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain webFilterChain (ServerHttpSecurity http){
         http
         .formLogin().disable()
+        .csrf().disable()
         .authorizeExchange(ex ->
         ex
             .pathMatchers("/user/**").permitAll()

@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.example.demo.model.Cuser;
 
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -29,7 +28,6 @@ public class JWTconfig {
 
     private String GenerateToken(Cuser user){
         Map<String,Object> claims = new HashMap<>();
-        String subject = null;
-        return CreateToken(claims,subject);
+        return CreateToken(claims,user.getUsername());
     }
 }
