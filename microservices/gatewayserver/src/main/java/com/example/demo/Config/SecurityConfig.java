@@ -22,7 +22,9 @@ public class SecurityConfig {
             .pathMatchers("/buku/**").hasAnyAuthority("member,admin")
             .pathMatchers("/transaksi/**").hasAnyAuthority("member,admin")
         .anyExchange().authenticated()
-        .and().httpBasic().disable()
+        .and().oauth2Login()
+        .and()
+        .oauth2ResourceServer().jwt()
         );
         return http.build();
     }
