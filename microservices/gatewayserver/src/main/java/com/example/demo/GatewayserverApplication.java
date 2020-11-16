@@ -10,8 +10,8 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,23 +23,24 @@ import org.springframework.web.reactive.function.client.WebClient;
 @EnableEurekaClient
 @RestController
 public class GatewayserverApplication {
-
-	@Autowired
-	AuthenticationManager authenticationManager;
-
 	@GetMapping(value = "/")
 	public String HelloClient (){
 		return "Hello Client";
 	}
+
+	@Autowired
+	ReactiveAuthenticationManager authenticationManager;
 
 	@PostMapping(value = "/login")
 	public ResponseEntity<?> userLogin(Cuser user) throws Exception{
 		UsernamePasswordAuthenticationToken loginToken = 
 		new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPswd());
 		try {
-			Authentication data = authenticationManager.authenticate(loginToken);
+			Authentication data = authenticationManager.authenticate(loginToken).block();
 			if(data.isAuthenticated()){
-				//Generate JWT
+				//Generate JWT//
+
+				//response//
 				return ResponseEntity.ok("login successful");
 			}
 		} catch (BadCredentialsException e) {
