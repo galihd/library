@@ -7,12 +7,11 @@ import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
 import reactor.core.publisher.Mono;
 
-
-
 @Component
-public class AuthenticationManager implements ReactiveAuthenticationManager{
+public class Authenticationmanager implements ReactiveAuthenticationManager{
     @Autowired
     private ReactiveUserDetailsService myUserDetailsService;
 
@@ -31,6 +30,3 @@ public class AuthenticationManager implements ReactiveAuthenticationManager{
         });
     }
 }
-
-
-
