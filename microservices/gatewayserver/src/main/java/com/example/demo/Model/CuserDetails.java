@@ -16,7 +16,6 @@ public class CuserDetails implements UserDetails {
     List<SimpleGrantedAuthority> authority;
 
     public CuserDetails(Cuser user) {
-        System.out.println(user.toString());
         this.username = user.getUsername();
         this.password = user.getPswd();
         this.email = user.getEmail();

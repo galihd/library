@@ -39,6 +39,7 @@ public class Cusercontroller {
 	
 	@GetMapping(path = "/{username}")
 	public ResponseEntity<Cuser> getUserInfo(@PathVariable("username") String username) {
+		System.out.println(username);
 		return cuserservice.getUserInfo(username);
 	}
 	

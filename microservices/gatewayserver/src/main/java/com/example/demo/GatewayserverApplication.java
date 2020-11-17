@@ -5,6 +5,7 @@ import com.example.demo.Model.Cuser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -13,11 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -32,22 +35,21 @@ public class GatewayserverApplication {
 	ReactiveAuthenticationManager authenticationManager;
 
 	@PostMapping(value = "/login")
-	public ResponseEntity<?> userLogin(Cuser user) throws Exception{
+	public Mono<ResponseEntity<?>> userLogin(@RequestBody Cuser user) throws Exception {
 		UsernamePasswordAuthenticationToken loginToken = 
 		new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPswd());
 		try {
-			Authentication data = authenticationManager.authenticate(loginToken).block();
-			if(data.isAuthenticated()){
-				//Generate JWT//
-
-				//response//
-				return ResponseEntity.ok("login successful");
-			}
+		return authenticationManager.authenticate(loginToken).flatMap((auth)->{
+			System.out.println("authenticated ? : " + auth.isAuthenticated());
+				if(auth.isAuthenticated()){
+					return Mono.just(ResponseEntity.ok("successfully logged in"));
+				}else{
+					return Mono.just(ResponseEntity.badRequest().body("invalid Credentials"));
+				}
+			});	
 		} catch (BadCredentialsException e) {
 			throw new Exception("invalid username or password",e);
 		}
-
-		return ResponseEntity.badRequest().body(null);
 	}
 	@Bean
 	public RouteLocator routelocator(RouteLocatorBuilder builder) {
@@ -55,6 +57,7 @@ public class GatewayserverApplication {
 	}
 
 	@Bean
+	@LoadBalanced
 	public WebClient.Builder webClient(){
 		return WebClient.builder();
 	}

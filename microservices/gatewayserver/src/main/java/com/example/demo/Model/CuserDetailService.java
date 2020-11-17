@@ -18,13 +18,13 @@ public class CuserDetailService implements ReactiveUserDetailsService{
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
-        Optional<UserDetails> userinfo = Optional.ofNullable(
-            new CuserDetails(webClient.build().get().uri("http://microuser/"+username)
-                        .retrieve()
-                        .bodyToMono(Cuser.class).block())
-                        );
-        System.out.println("webclientresult = " + userinfo.get().getUsername());
-        return Mono.justOrEmpty(userinfo);
+        Mono<Cuser> user = webClient.build().get().uri("http://MICROUSER/"+username)
+        .retrieve()
+        .bodyToMono(Cuser.class);
+        return user.flatMap((response) -> {
+            Optional<CuserDetails> userinfo = Optional.ofNullable(new CuserDetails(response));
+            return Mono.justOrEmpty(userinfo);
+        });
     }
     
 }
