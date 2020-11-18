@@ -4,10 +4,8 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
-import org.springframework.security.authentication.ReactiveAuthenticationManagerResolver;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -18,11 +16,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.web.server.ServerWebExchange;
 
 import reactor.core.publisher.Mono;
 
-@Configuration
+
 @EnableWebFluxSecurity
 public class SecurityConfig{
 
@@ -35,17 +32,16 @@ public class SecurityConfig{
         .csrf().disable()
         .authorizeExchange(ex ->
         ex
-            .pathMatchers("/","/login**").permitAll()
+            .pathMatchers("/","/theloginpage**").permitAll()
             .pathMatchers("/user/**").hasAnyAuthority("member","admin")
             .pathMatchers("/dompet/**").hasAnyAuthority("member","admin")
             .pathMatchers("/buku/**").hasAnyAuthority("member","admin")
             .pathMatchers("/transaksi/**").hasAnyAuthority("member","admin")
         .anyExchange()
         .authenticated()
-        .and().oauth2Login()
-        )
+        .and().oauth2Login());
         // .addFilterBefore(new AuthenticationWebFilter(resolver()), SecurityWebFiltersOrder.REACTOR_CONTEXT)
-        ;
+        
         return http.build();
     }
 
@@ -82,7 +78,7 @@ public class SecurityConfig{
         return userDetailsRepository;
     }
 
-    ReactiveAuthenticationManagerResolver<ServerWebExchange> resolver(){
+    /*ReactiveAuthenticationManagerResolver<ServerWebExchange> resolver(){
         return ((exchange)->{
             if(
                 exchange.getRequest().getPath().
@@ -102,7 +98,7 @@ public class SecurityConfig{
 
             return Mono.just(jwtauthenticationManager());
         });
-    }
+    }*/
 }
 
    

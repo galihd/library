@@ -1,12 +1,14 @@
 package com.example.demo.api;
 
-import java.security.Principal;
+// import java.security.Principal;
 
 import com.example.demo.model.Cuser;
 import com.example.demo.service.CuserServiceInt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,15 +41,17 @@ public class Cusercontroller {
 		return cuserservice.changePassword(user);
 	}
 	
-	@PostMapping(path = "/login")
-	public ResponseEntity<?> userLogin(@RequestBody Cuser user) throws Exception{
-		return cuserservice.userLogin(user);
-	}
+	// @PostMapping(path = "/login")
+	// public ResponseEntity<?> userLogin(@RequestBody Cuser user) throws Exception{
+	// 	return cuserservice.userLogin(user);
+	// }
 
 	@GetMapping(path = "/info/me")
-	public Principal oauthinfo(Principal principal){
-		return principal;
-	}
+	public String resource(@AuthenticationPrincipal Jwt jwt) {
+		return String.format("Resource accessed by: %s (with subjectId: %s)" ,
+				jwt.getClaims().get("user_name"),
+				jwt.getSubject());
+	  }
 
 	@GetMapping(path = "/{username}")
 	public ResponseEntity<Cuser> getUserInfo(@PathVariable("username") String username) {

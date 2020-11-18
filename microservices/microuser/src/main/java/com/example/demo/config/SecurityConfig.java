@@ -4,6 +4,7 @@ import com.example.demo.service.CuserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
+@Configuration
 @EnableWebSecurity
 @EnableResourceServer
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -36,10 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
         .csrf().disable()
         .authorizeRequests()
-        .antMatchers(HttpMethod.POST).permitAll()
-        .antMatchers("/oauth/**").permitAll()
+        .antMatchers("/login").permitAll()
+        .antMatchers("/oauth**").permitAll()
         .anyRequest()
-        .authenticated().and()
+        .authenticated()
+        .and()
+        .httpBasic()
+        .and()
+        .formLogin().disable()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
