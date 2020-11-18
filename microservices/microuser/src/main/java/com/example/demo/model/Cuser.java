@@ -28,7 +28,7 @@ public class Cuser {
 
 	@Override
 	public String toString() {
-		return "Cuser [username=" + username + ", pswd=" + pswd + ", email=" + email + "]";
+		return "Cuser [username=" + username + ", pswd=" + pswd + ", email=" + email + ", roles ="+ roles+"]";
 	}
 
 

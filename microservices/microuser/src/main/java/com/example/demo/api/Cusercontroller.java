@@ -1,5 +1,7 @@
 package com.example.demo.api;
 
+import java.security.Principal;
+
 import com.example.demo.model.Cuser;
 import com.example.demo.service.CuserServiceInt;
 
@@ -37,9 +39,18 @@ public class Cusercontroller {
 		return cuserservice.changePassword(user);
 	}
 	
+	@PostMapping(path = "/login")
+	public ResponseEntity<?> userLogin(@RequestBody Cuser user) throws Exception{
+		return cuserservice.userLogin(user);
+	}
+
+	@GetMapping(path = "/info/me")
+	public Principal oauthinfo(Principal principal){
+		return principal;
+	}
+
 	@GetMapping(path = "/{username}")
 	public ResponseEntity<Cuser> getUserInfo(@PathVariable("username") String username) {
-		System.out.println(username);
 		return cuserservice.getUserInfo(username);
 	}
 	

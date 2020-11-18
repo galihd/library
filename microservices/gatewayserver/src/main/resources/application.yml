@@ -4,16 +4,34 @@ spring:
   application:
     name: gateway-server
   cloud:
-    # gateway:
-    #   globalcors:
-    #     corsConfigurations:
-    #       '[/**]':
-    #         allowedOrigins: "*"
-    #         allowedMethods:
-    #         - POST
-    #         - GET
-    #         - PUT
-    #         - DELETE
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+            - POST
+            - GET
+            - PUT
+            - DELETE
     config:
       uri:
       - http://localhost:8888
+  security:
+    oauth2:
+      client:
+        registration:
+          custom-client:
+            provider: custom-provider
+            client-id: tugascloud
+            client-secret: tugascloud
+            redirect-uri: http://localhost:9000/login/oauth2/code
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+        provider:
+          custom-provider:
+            token-uri: http://localhost:9001/oauth/token
+            authorization-uri: http://localhost:9001/oauth/authorize
+            user-info-uri: http://localhost:9001/info/me
+            user-name-attribute: name
+                      
