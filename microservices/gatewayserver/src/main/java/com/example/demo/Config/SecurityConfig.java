@@ -33,15 +33,13 @@ public class SecurityConfig{
         .authorizeExchange(ex ->
         ex
             .pathMatchers("/","/login").permitAll()
-            .pathMatchers("/user/{username}").permitAll()
-            .pathMatchers("/user/**").hasAnyAuthority("member","admin")
+            .pathMatchers("/user/**","/eureka").permitAll()
+            // .pathMatchers("/user/**").hasAnyAuthority("member","admin")
             .pathMatchers("/dompet/**").hasAnyAuthority("member","admin")
             .pathMatchers("/buku/**").hasAnyAuthority("member","admin")
             .pathMatchers("/transaksi/**").hasAnyAuthority("member","admin")
         .anyExchange()
-        .authenticated()
-        .and().oauth2Login());
-        // .addFilterBefore(new AuthenticationWebFilter(resolver()), SecurityWebFiltersOrder.REACTOR_CONTEXT)
+        .authenticated());
         
         return http.build();
     }
@@ -62,22 +60,22 @@ public class SecurityConfig{
         return userDetailsRepository;
     }
 
-    @Bean(name = "jwtauth")
-    ReactiveAuthenticationManager jwtauthenticationManager(){
-        System.out.println("this is jwt");
-        UserDetailsRepositoryReactiveAuthenticationManager userDetailsRepository = 
-        new UserDetailsRepositoryReactiveAuthenticationManager(new ReactiveUserDetailsService(){
-            @Override
-            public Mono<UserDetails> findByUsername(String username) {
-                return Mono.just(new User("adam", BcryptEncoder().encode("adam"), true, true, true, true, Arrays.asList(
-                    new SimpleGrantedAuthority("admin"))
-                ));
-            }
-        });
+    // @Bean(name = "jwtauth")
+    // ReactiveAuthenticationManager jwtauthenticationManager(){
+    //     System.out.println("this is jwt");
+    //     UserDetailsRepositoryReactiveAuthenticationManager userDetailsRepository = 
+    //     new UserDetailsRepositoryReactiveAuthenticationManager(new ReactiveUserDetailsService(){
+    //         @Override
+    //         public Mono<UserDetails> findByUsername(String username) {
+    //             return Mono.just(new User("adam", BcryptEncoder().encode("adam"), true, true, true, true, Arrays.asList(
+    //                 new SimpleGrantedAuthority("admin"))
+    //             ));
+    //         }
+    //     });
 
-        userDetailsRepository.setPasswordEncoder(BcryptEncoder());
-        return userDetailsRepository;
-    }
+    //     userDetailsRepository.setPasswordEncoder(BcryptEncoder());
+    //     return userDetailsRepository;
+    // }
 
     /*ReactiveAuthenticationManagerResolver<ServerWebExchange> resolver(){
         return ((exchange)->{

@@ -10,13 +10,13 @@ import com.example.demo.model.Cuser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
+/*// import org.springframework.security.authentication.AuthenticationManager;
 // import org.springframework.security.authentication.BadCredentialsException;
 // import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 // import org.springframework.security.core.Authentication;
 // import org.springframework.security.core.userdetails.UserDetails;
 // import org.springframework.security.core.userdetails.UserDetailsService;
-// import org.springframework.security.core.userdetails.UsernameNotFoundException;
+// import org.springframework.security.core.userdetails.UsernameNotFoundException;*/
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -70,7 +70,7 @@ public class CuserService implements CuserServiceInt{
 	public ResponseEntity<List<Cuser>> getAllUser() {
 		return new ResponseEntity<List<Cuser>>(cuserdao.findAll(), HttpStatus.OK);
 	}
-	// //Spring Security Authentication//
+	/* //Spring Security Authentication//
 	// @Override
 	// public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 	// 	Cuser userinfo = cuserdao.findById(username).get();
@@ -95,7 +95,7 @@ public class CuserService implements CuserServiceInt{
 	// 		throw new Exception("invalid username or password ", ex);
 	// 	}
 	// 	return ResponseEntity.badRequest().body("failed authentication");
-	// }
+	// }*/
 
 
 	@Override
@@ -108,7 +108,7 @@ public class CuserService implements CuserServiceInt{
 	public ResponseEntity<Object> changePassword(Cuser user) {
 		Optional<Cuser> updateuser;
 		if ((updateuser = cuserdao.findById(user.getUsername())).isPresent()) {
-			updateuser.get().setPswd(user.getPswd());
+			updateuser.get().setPswd(bcrypt.encode(user.getPswd()));
 			cuserdao.save(updateuser.get());
 			return new ResponseEntity<Object>(HttpStatus.OK);
 		} else {
