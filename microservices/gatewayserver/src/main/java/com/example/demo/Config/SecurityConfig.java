@@ -32,8 +32,8 @@ public class SecurityConfig{
         .csrf().disable()
         .authorizeExchange(ex ->
         ex
-            .pathMatchers("/","/theloginpage**").permitAll()
-            .pathMatchers("/user/login","user/oauth**").permitAll()
+            .pathMatchers("/","/login").permitAll()
+            .pathMatchers("/user/{username}").permitAll()
             .pathMatchers("/user/**").hasAnyAuthority("member","admin")
             .pathMatchers("/dompet/**").hasAnyAuthority("member","admin")
             .pathMatchers("/buku/**").hasAnyAuthority("member","admin")

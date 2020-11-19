@@ -19,21 +19,21 @@ spring:
     config:
       uri:
       - http://localhost:8888
-  security:
-    oauth2:
-      client:
-        registration:
-          custom-client:
-            provider: custom-provider
-            client-id: tugascloud
-            client-secret: tugascloud
-            authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:9000/login
-            client-authentication-method: basic
-        provider:
-          custom-provider:
-            user-info-authentication-method: basic
-            token-uri: http://localhost:9001/oauth/token
-            authorization-uri: http://localhost:9001/oauth/authorize
-            user-info-uri: http://localhost:9001/info/me
+  # security:
+  #   oauth2:
+  #     client:
+  #       registration:
+  #         custom-client:
+  #           provider: custom-provider
+  #           client-id: tugascloud
+  #           client-secret: tugascloud
+  #           authorization-grant-type: authorization_code
+  #           redirect-uri: http://localhost:9000/login
+  #           client-authentication-method: basic
+  #       provider:
+  #         custom-provider:
+  #           user-info-authentication-method: basic
+  #           token-uri: http://localhost:9001/oauth/token
+  #           authorization-uri: http://localhost:9001/oauth/authorize
+  #           user-info-uri: http://localhost:9001/info/me
       

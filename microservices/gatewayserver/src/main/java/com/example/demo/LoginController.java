@@ -37,21 +37,21 @@ public class LoginController {
         return "this is login page";
     }
 
-	// @PostMapping(value = "/login")
-	// public Mono<ResponseEntity<?>> userLogin(@RequestBody Cuser user) throws Exception {
-	// 	UsernamePasswordAuthenticationToken loginToken = 
-	// 	new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPswd());
-	// 	try {
-	// 	return dbauthenticationManager.authenticate(loginToken).flatMap((auth)->{
-	// 		System.out.println("authenticated ? : " + auth.isAuthenticated());
-	// 			if(auth.isAuthenticated()){
-	// 				return Mono.just(ResponseEntity.ok("successfully logged in"));
-	// 			}else{
-	// 				return Mono.just(ResponseEntity.badRequest().body("invalid Credentials"));
-	// 			}
-	// 		});	
-	// 	} catch (BadCredentialsException e) {
-	// 		throw new Exception("invalid username or password",e);
-	// 	}
-	// }
+	@PostMapping(value = "/login")
+	public Mono<ResponseEntity<?>> userLogin(@RequestBody Cuser user) throws Exception {
+		UsernamePasswordAuthenticationToken loginToken = 
+		new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPswd());
+		try {
+		return dbauthenticationManager.authenticate(loginToken).flatMap((auth)->{
+			System.out.println("authenticated ? : " + auth.isAuthenticated());
+				if(auth.isAuthenticated()){
+					return Mono.just(ResponseEntity.ok("successfully logged in"));
+				}else{
+					return Mono.just(ResponseEntity.badRequest().body("invalid Credentials"));
+				}
+			});	
+		} catch (BadCredentialsException e) {
+			throw new Exception("invalid username or password",e);
+		}
+	}
 }
