@@ -1,5 +1,7 @@
 package com.example.demo.api;
 
+import java.security.Principal;
+
 // import java.security.Principal;
 
 import com.example.demo.model.Cuser;
@@ -47,10 +49,8 @@ public class Cusercontroller {
 	// }
 
 	@GetMapping(path = "/info/me")
-	public String resource(@AuthenticationPrincipal Jwt jwt) {
-		return String.format("Resource accessed by: %s (with subjectId: %s)" ,
-				jwt.getClaims().get("user_name"),
-				jwt.getSubject());
+	public Principal resource(Principal principal) {
+		return principal;
 	  }
 
 	@GetMapping(path = "/{username}")

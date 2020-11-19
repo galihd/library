@@ -38,15 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
         .csrf().disable()
         .authorizeRequests()
-        .antMatchers("/login").permitAll()
-        .antMatchers("/oauth**").permitAll()
+        .antMatchers("/login","/oauth**").permitAll()
         .anyRequest()
         .authenticated()
         .and()
-        .httpBasic()
-        .and()
-        .formLogin().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        .httpBasic();
+        // .and()
+        // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Bean
