@@ -26,7 +26,7 @@ public class SecurityConfig{
         .authorizeExchange(ex ->
         ex
             .pathMatchers("/","/login").permitAll()
-            .pathMatchers("/user/**","/eureka").permitAll()
+            .pathMatchers("/user/**","/eureka/**").permitAll()
             // .pathMatchers("/user/**").hasAnyAuthority("member","admin")
             .pathMatchers("/dompet/**").hasAnyAuthority("member","admin")
             .pathMatchers("/buku/**").hasAnyAuthority("member","admin")
