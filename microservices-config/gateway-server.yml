@@ -25,7 +25,7 @@ spring:
         - Path=/user/**
       - id: eureka-server
         uri: 
-          lb:http://localhost:8081
+          http://localhost:8081
         predicates:
         - Path=/eureka/**
       default-filters:
