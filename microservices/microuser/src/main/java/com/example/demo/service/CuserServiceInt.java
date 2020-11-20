@@ -11,5 +11,5 @@ public interface CuserServiceInt {
 	ResponseEntity<Object> deleteUser(Cuser user);
 	ResponseEntity<Object> changePassword(Cuser user);
 	ResponseEntity<Object> registerAdmin(Cuser user);
-	ResponseEntity<?> userLogin(Cuser user) throws Exception;
+	// ResponseEntity<?> userLogin(Cuser user) throws Exception;
 }

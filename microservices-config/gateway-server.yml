@@ -23,11 +23,6 @@ spring:
           lb:http://MICROUSER
         predicates:
         - Path=/user/**
-      - id: eureka-server
-        uri: 
-          lb:http://eureka-server
-        predicates:
-        - Path=/eureka/**
       default-filters:
       - StripPrefix= 1
       httpclient:

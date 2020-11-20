@@ -135,10 +135,4 @@ public class CuserService implements CuserServiceInt{
 		}
 	}
 
-	@Override
-	public ResponseEntity<?> userLogin(Cuser user) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
